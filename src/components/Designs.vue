@@ -58,7 +58,7 @@ export default {
     display: flex;
     justify: center;
     align-items: center;
-    width: 25vw;
+    white-space: pre;
     margin: auto;
   }
 </style>
