@@ -56,7 +56,7 @@ export default {
 <style scoped>
   .design {
     display: flex;
-    justify: center;
+    justify-content: center;
     align-items: center;
     white-space: pre;
     margin: auto;
