@@ -1,0 +1,60 @@
+import { keyStores, Near, WalletConnection } from "near-api-js";
+import BN from "bn.js";
+
+const gas = new BN("70000000000000");
+
+export const CONTRACT_ID = "dev-1626164886395-54155878016725";
+
+// use new NEAR here to avoid needing async/await
+export const near = new Near({
+  networkId: "testnet",
+  keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+  nodeUrl: "https://rpc.testnet.near.org",
+  walletUrl: "https://wallet.testnet.near.org"
+});
+
+// can now create a new WalletConnection with the created Near object
+export const wallet = new WalletConnection(near, "dev-1626164886395-54155878016725");
+
+// a service to see your design from the blockchain
+// export const viewMyDesign = () => {
+//   return wallet.account().viewFunction(CONTRACT_ID, "viewMyDesign ", {});
+// };
+
+// a service to design an art within the blockchain
+export const viewMyDesign = () => {
+  return wallet.account().functionCall({
+    contractId: CONTRACT_ID,
+    methodName: "viewMyDesign",
+    args: {}
+  });
+};
+
+// a service to design an art within the blockchain
+export const randomDesign = () => {
+  return wallet.account().functionCall({
+    contractId: CONTRACT_ID,
+    methodName: "design",
+    gas,
+    args: {}
+  });
+};
+// a service to design an art within the blockchain
+export const design = ({ seed }) => {
+  return wallet.account().functionCall({
+    contractId: CONTRACT_ID,
+    methodName: "design",
+    gas,
+    args: { seed }
+  });
+};
+
+// a service to claim your design within the blockchain
+export const claimMyDesign = ({ seed }) => {
+  return wallet.account().functionCall({
+    contractId: CONTRACT_ID,
+    methodName: "claimMyDesign",
+    gas,
+    args: { seed }
+  });
+};

@@ -1,11 +1,16 @@
 <template>
-  <h1>hello</h1>
+  <BaseNavbar />
+  <Designs />
+  <DesignList />
 </template>
 
 <script>
+import BaseNavbar from "@/components/BaseNavbar";
+import Designs from "@/components/Designs";
+import DesignList from "@/components/DesignList";
 export default {
   name: "App",
-  components: {}
+  components: { Designs, BaseNavbar, DesignList }
 };
 </script>
 
