@@ -1,7 +1,12 @@
 <template>
   <BaseNavbar />
-  <Designs />
+  <!-- <Designs /> -->
   <DesignList />
+  <Suspense>
+    <template #default>
+      <Designs /> 
+    </template>
+  </Suspense>
 </template>
 
 <script>
