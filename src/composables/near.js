@@ -5,7 +5,7 @@ import { viewMyDesign, randomDesign, design, claimMyDesign } from "../services/n
 // this hook gets the array of messages and returns:
 // 1. the array of messages (getter)
 // 2. a function to add messages to the array of messages (setter)
-export const useDesigns = () => {
+export const useDesigns = async () => {
   // messages starts as an empty array
   const designs = ref([]);
 

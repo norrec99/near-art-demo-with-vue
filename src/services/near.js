@@ -22,8 +22,8 @@ export const wallet = new WalletConnection(near, "dev-1626164886395-541558780167
 // };
 
 // a service to design an art within the blockchain
-export const viewMyDesign = () => {
-  return wallet.account().functionCall({
+export const viewMyDesign = async () => {
+  return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
     methodName: "viewMyDesign",
     args: {}
@@ -31,8 +31,8 @@ export const viewMyDesign = () => {
 };
 
 // a service to design an art within the blockchain
-export const randomDesign = () => {
-  return wallet.account().functionCall({
+export const randomDesign = async () => {
+  return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
     methodName: "design",
     gas,
@@ -40,8 +40,8 @@ export const randomDesign = () => {
   });
 };
 // a service to design an art within the blockchain
-export const design = ({ seed }) => {
-  return wallet.account().functionCall({
+export const design = async ({ seed }) => {
+  return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
     methodName: "design",
     gas,
@@ -50,8 +50,8 @@ export const design = ({ seed }) => {
 };
 
 // a service to claim your design within the blockchain
-export const claimMyDesign = ({ seed }) => {
-  return wallet.account().functionCall({
+export const claimMyDesign = async ({ seed }) => {
+  return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
     methodName: "claimMyDesign",
     gas,
