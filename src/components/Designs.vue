@@ -1,10 +1,6 @@
 <template>
-  <BaseForm :randomArt="dObj.image" />
-  <div class="design">
-    <li v-for="design in desings" :key="design">
-      {{ desing }}
-    </li>
-  </div>
+  <BaseForm :randomArt="dObj" @gRandomArt="generateArt" />
+  <div class="design">hello</div>
 </template>
 
 <script>
@@ -43,12 +39,23 @@ export default {
       await claimMyDesign({ seed });
       designs.value = await viewMyDesign();
     };
-    const d1 = await randomDesign();
-    const dObj = { image: d1.receipts_outcome[0].outcome.logs[1] };
-    designs.value.push(dObj);
-    console.log('*******************');
-    console.log(designs.value[0]);
-    console.log('*******************');
+
+    // const d1 = await randomDesign();
+    // const dObj = { image: d1.receipts_outcome[0].outcome.logs[1] };
+    // designs.value.push(dObj);
+    // console.log('*******************');
+    // console.log(designs.value[0]);
+    // console.log('*******************');
+
+    async function generateArt() {
+      const d1 = await randomDesign().then(e => {
+        console.log('*******************');
+        console.log(e);
+        console.log('*******************');
+      });
+      const dObj = { image: d1.receipts_outcome[0].outcome.logs[1] };
+      designs.value.push(dObj);
+    }
     // console.log("*******************");
     // console.log(designs.value);
     // console.log("*******************");
@@ -59,8 +66,9 @@ export default {
       randomDesign: handleRandomDesign,
       design: handleDesign,
       claimMyDesign: claimDesign,
-      d1,
-      dObj
+      // d1,
+      // dObj,
+      generateArt
     };
   }
 };
