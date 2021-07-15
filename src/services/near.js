@@ -1,20 +1,20 @@
-import { keyStores, Near, WalletConnection } from "near-api-js";
-import BN from "bn.js";
+import { keyStores, Near, WalletConnection } from 'near-api-js';
+import BN from 'bn.js';
 
-const gas = new BN("70000000000000");
+const gas = new BN('70000000000000');
 
-export const CONTRACT_ID = "dev-1626164886395-54155878016725";
+export const CONTRACT_ID = 'dev-1626164886395-54155878016725';
 
 // use new NEAR here to avoid needing async/await
 export const near = new Near({
-  networkId: "testnet",
+  networkId: 'testnet',
   keyStore: new keyStores.BrowserLocalStorageKeyStore(),
-  nodeUrl: "https://rpc.testnet.near.org",
-  walletUrl: "https://wallet.testnet.near.org"
+  nodeUrl: 'https://rpc.testnet.near.org',
+  walletUrl: 'https://wallet.testnet.near.org'
 });
 
 // can now create a new WalletConnection with the created Near object
-export const wallet = new WalletConnection(near, "dev-1626164886395-54155878016725");
+export const wallet = new WalletConnection(near, 'dev-1626164886395-54155878016725');
 
 // a service to see your design from the blockchain
 // export const viewMyDesign = () => {
@@ -25,7 +25,7 @@ export const wallet = new WalletConnection(near, "dev-1626164886395-541558780167
 export const viewMyDesign = async () => {
   return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
-    methodName: "viewMyDesign",
+    methodName: 'viewMyDesign',
     args: {}
   });
 };
@@ -34,7 +34,7 @@ export const viewMyDesign = async () => {
 export const randomDesign = async () => {
   return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
-    methodName: "design",
+    methodName: 'design',
     gas,
     args: {}
   });
@@ -43,7 +43,7 @@ export const randomDesign = async () => {
 export const design = async ({ seed }) => {
   return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
-    methodName: "design",
+    methodName: 'design',
     gas,
     args: { seed }
   });
@@ -53,7 +53,7 @@ export const design = async ({ seed }) => {
 export const claimMyDesign = async ({ seed }) => {
   return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
-    methodName: "claimMyDesign",
+    methodName: 'claimMyDesign',
     gas,
     args: { seed }
   });

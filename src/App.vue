@@ -1,21 +1,21 @@
 <template>
   <BaseNavbar />
   <!-- <Designs /> -->
-  <DesignList />
+  <!-- <DesignList /> -->
   <Suspense>
     <template #default>
-      <Designs /> 
+      <Designs />
     </template>
   </Suspense>
 </template>
 
 <script>
-import BaseNavbar from "@/components/BaseNavbar";
-import Designs from "@/components/Designs";
-import DesignList from "@/components/DesignList";
+import BaseNavbar from '@/components/BaseNavbar';
+import Designs from '@/components/Designs';
+// import DesignList from "@/components/DesignList";
 export default {
-  name: "App",
-  components: { Designs, BaseNavbar, DesignList }
+  name: 'App',
+  components: { Designs, BaseNavbar }
 };
 </script>
 

@@ -1,5 +1,5 @@
-import { ref, onMounted } from "vue";
-import { viewMyDesign, randomDesign, design, claimMyDesign } from "../services/near";
+import { ref, onMounted } from 'vue';
+import { viewMyDesign, randomDesign, design, claimMyDesign } from '../services/near';
 
 // There is only one reactive piece of data in this application (messages)
 // this hook gets the array of messages and returns:

@@ -1,18 +1,24 @@
 <template>
-  <h1>hello</h1>
+  <BaseForm :randomArt="dObj.image" />
   <div class="design">
-    {{ dObj.image }}
+    <li v-for="design in desings" :key="design">
+      {{ desing }}
+    </li>
   </div>
 </template>
 
 <script>
 // import { useDesigns } from "@/composables/near.js";
-import { ref, onMounted } from "vue";
-import { viewMyDesign, randomDesign, design, claimMyDesign } from "../services/near";
+import BaseForm from '@/components/BaseForm';
+import { ref, onMounted } from 'vue';
+import { viewMyDesign, randomDesign, design, claimMyDesign } from '../services/near';
 
 export default {
+  components: {
+    BaseForm
+  },
   async setup() {
-  // messages starts as an empty array
+    // messages starts as an empty array
     const designs = ref([]);
 
     // when the component first mounts get designs from the blockchain
@@ -37,10 +43,17 @@ export default {
       await claimMyDesign({ seed });
       designs.value = await viewMyDesign();
     };
-    const d1 = await design("13068982")
-    const dObj = {image: d1.receipts_outcome[0].outcome.logs[1] }
-    console.log('d1 ', d1);
-    console.log(claimMyDesign("35805521"));
+    const d1 = await randomDesign();
+    const dObj = { image: d1.receipts_outcome[0].outcome.logs[1] };
+    designs.value.push(dObj);
+    console.log('*******************');
+    console.log(designs.value[0]);
+    console.log('*******************');
+    // console.log("*******************");
+    // console.log(designs.value);
+    // console.log("*******************");
+    // console.log("d1 ", d1);
+    // console.log(claimMyDesign("35805521"));
     return {
       designs,
       randomDesign: handleRandomDesign,
@@ -54,11 +67,11 @@ export default {
 </script>
 
 <style scoped>
-  .design {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    white-space: pre;
-    margin: auto;
-  }
+.design {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: pre;
+  margin: auto;
+}
 </style>
