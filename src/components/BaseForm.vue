@@ -5,6 +5,7 @@
       <button @click="claimDesignEvent" class="mr-10 ml-10 p-1 w-20 rounded-full bg-indigo-200">Send</button>
       <label for="meme" class="mr-2">Random Art</label>
       <button @click="generateRandomEvent" class="mr-2 ml-10 p-1 w-20 rounded-full bg-indigo-200">Generate</button>
+
     <div></div>
   </div>
   <div class="design">
@@ -26,6 +27,7 @@ export default {
   
   setup(props, { emit }) {
     let seed;
+
     // eslint-disable-next-line vue/no-setup-props-destructure
     function generateRandomEvent() {
      emit('generateRandom')
