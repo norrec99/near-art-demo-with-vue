@@ -51,10 +51,11 @@ export const design = async ({ seed }) => {
 
 // a service to claim your design within the blockchain
 export const claimMyDesign = async ({ seed }) => {
+  let seedvalue=seed.value
   return await wallet.account().functionCall({
     contractId: CONTRACT_ID,
     methodName: 'claimMyDesign',
     gas,
-    args: { seed }
+    args: { seed:seedvalue }
   });
 };

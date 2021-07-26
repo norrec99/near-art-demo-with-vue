@@ -1,10 +1,11 @@
 <template>
-  <BaseForm
-    @generateRandom="generateRandom"
-    :seed="seed"
-  />
-  <div v-for="design in designs" :key="design" class="design">
-    {{ design }}
+  <BaseForm @generateRandom="generateRandom" :seed="seed" />
+  <div v-if="seed">
+    {{ seed }}
+    <button @click="claimDesign()">Claim Design</button>
+  </div>
+  <div class="design">
+    {{ designs }}
   </div>
 </template>
 
@@ -15,7 +16,7 @@ import { ref, onMounted } from "vue";
 import {
   viewMyDesign,
   design,
-  // claimMyDesign,
+  claimMyDesign,
   randomDesign,
 } from "../services/near";
 
@@ -27,15 +28,21 @@ export default {
   async setup() {
     // messages starts as an empty array
     const designs = ref([]);
+    const seed = ref();
+    let numberPattern = /\d+/g;
+
     onMounted(async () => {
       await viewMyDesign().then((i) => {
-        designs.value = i.receipts_outcome[0].outcome.logs;
+        designs.value = i.receipts_outcome[0].outcome.logs[0];
       });
     });
 
     const generateRandom = async () => {
       await randomDesign().then((i) => {
-        designs.value = i.receipts_outcome[0].outcome.logs;
+        designs.value = i.receipts_outcome[0].outcome.logs[1];
+        seed.value = JSON.parse(
+          i.receipts_outcome[0].outcome.logs[0].match(numberPattern)
+        );
       });
     };
 
@@ -48,17 +55,18 @@ export default {
     };
 
     // create a function that allows claiming a specific design to the blockchain
-    // const claimDesign = async ({ seed }) => {
-    //   await claimMyDesign({ seed }).then((i) => {
-    //     designs.value = i.receipts_outcome[0].outcome.logs;
-    //   });
-    // };
+    const claimDesign = async () => {
+      await claimMyDesign({ seed }).then((i) => {
+        designs.value = i.receipts_outcome[0].outcome.logs;
+      });
+    };
 
     return {
       designs,
       design: handleDesign,
-      // claimDesign,
+      claimDesign,
       generateRandom,
+      seed,
     };
   },
 };
