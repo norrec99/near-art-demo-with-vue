@@ -1,8 +1,12 @@
 <template>
   <BaseForm @generateRandom="generateRandom" :seed="seed" />
   <div v-if="seed">
-    {{ seed }}
-    <button @click="claimDesign()">Claim Design</button>
+      <button @click="claimDesign()" type="button" class="inline-flex items-center px-3 py-2 border border-transparent font-medium rounded-md bg-indigo-200">
+    Claim Design
+  </button>
+  </div>
+  <div v-if="claimErr">
+    <Alert :message=claimErr.kind.ExecutionError />
   </div>
   <div class="design">
     {{ designs }}
@@ -11,6 +15,7 @@
 
 <script>
 import BaseForm from "@/components/BaseForm";
+import Alert from "@/components/Alert"
 import { ref, onMounted } from "vue";
 
 import {
@@ -23,6 +28,7 @@ import {
 export default {
   components: {
     BaseForm,
+    Alert
   },
 
   async setup() {
@@ -30,6 +36,7 @@ export default {
     const designs = ref([]);
     const seed = ref();
     let numberPattern = /\d+/g;
+    const claimErr = ref("");
 
     onMounted(async () => {
       await viewMyDesign().then((i) => {
@@ -56,9 +63,11 @@ export default {
 
     // create a function that allows claiming a specific design to the blockchain
     const claimDesign = async () => {
+      try{
       await claimMyDesign({ seed }).then((i) => {
         designs.value = i.receipts_outcome[0].outcome.logs;
       });
+      }catch(err){claimErr.value = err}
     };
 
     return {
@@ -67,6 +76,7 @@ export default {
       claimDesign,
       generateRandom,
       seed,
+      claimErr,
     };
   },
 };
