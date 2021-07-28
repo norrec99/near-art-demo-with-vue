@@ -7,7 +7,6 @@
       <button @click="claimDesignEvent" type="button" class="  px-3 py-2 border border-transparent font-medium rounded-md bg-indigo-200">Claim Design</button>
       <button @click="burnDesignEvent" type="button" class="  px-3 py-2 border border-transparent font-medium rounded-md bg-indigo-200">Burn Design</button>
       <button @click="generateRandomEvent" class="px-3 py-2 border border-transparent font-medium rounded-md bg-indigo-200">Generate</button>
-
     <div></div>
   </div>
   <div class="design">
