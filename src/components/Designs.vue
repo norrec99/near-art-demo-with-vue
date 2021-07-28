@@ -1,15 +1,18 @@
 <template>
-  <BaseForm @generateRandom="generateRandom" :seed="seed" />
-  <div v-if="seed">
-      <button @click="claimDesign()" type="button" class="inline-flex items-center px-3 py-2 border border-transparent font-medium rounded-md bg-indigo-200">
-    Claim Design
-  </button>
-  </div>
-  <div v-if="claimErr">
+  <BaseForm @generateRandom="generateRandom" @claimDesign="claimDesign" @burnDesign="burnDesign"/>
+   <div v-if="claimErr">
     <Alert :message=claimErr.kind.ExecutionError />
   </div>
   <div class="design">
+  <div v-if="seed">
+      <!-- <button @click="claimDesign()" type="button" class="  px-3 py-2 border border-transparent font-medium rounded-md bg-indigo-200">
+    Claim Design
+  </button> -->
+  </div>
     {{ designs }}
+    <!-- <button @click="burnDesign()" type="button" class="  px-3 py-2 border border-transparent font-medium rounded-md bg-indigo-200">
+      Burn design
+    </button> -->
   </div>
 </template>
 
@@ -23,6 +26,7 @@ import {
   design,
   claimMyDesign,
   randomDesign,
+  burnMyDesign,
 } from "../services/near";
 
 export default {
@@ -65,7 +69,16 @@ export default {
     const claimDesign = async () => {
       try{
       await claimMyDesign({ seed }).then((i) => {
-        designs.value = i.receipts_outcome[0].outcome.logs;
+        designs.value = i.receipts_outcome[0].outcome.logs[0];
+      });
+      }catch(err){claimErr.value = err}
+    };
+
+    const burnDesign = async () => {
+      try{
+      await burnMyDesign().then((i) => {
+        console.log(i)
+        designs.value = "Design burned. Generate new design to claim!"
       });
       }catch(err){claimErr.value = err}
     };
@@ -75,6 +88,7 @@ export default {
       design: handleDesign,
       claimDesign,
       generateRandom,
+      burnDesign,
       seed,
       claimErr,
     };
